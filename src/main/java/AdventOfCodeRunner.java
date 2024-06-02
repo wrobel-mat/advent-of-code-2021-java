@@ -1,4 +1,5 @@
 import http.AocClient;
+import solution.ISolution;
 import util.AocUtil;
 
 import java.util.List;
@@ -11,6 +12,8 @@ public class AdventOfCodeRunner {
         int year = Integer.parseInt(props.getProperty("year"));
         int day = Integer.parseInt(props.getProperty("day"));
         List<String> input = new AocClient().getInput(year, day);
-        System.out.println("all good");
+        ISolution solution = AocUtil.getSolution(day);
+        System.out.println(STR."Part 1: \{solution.solvePartOne(input)}");
+        System.out.println(STR."Part 2: \{solution.solvePartTwo(input)}");
     }
 }

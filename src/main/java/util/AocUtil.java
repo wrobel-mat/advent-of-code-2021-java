@@ -1,7 +1,10 @@
 package util;
 
+import solution.ISolution;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 public class AocUtil {
@@ -22,6 +25,15 @@ public class AocUtil {
             props.load(propsConfig);
             return props;
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ISolution getSolution(int day) {
+        try {
+            return (ISolution) Class.forName(STR."solution.day\{day}.Solution").getConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException |
+                 ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

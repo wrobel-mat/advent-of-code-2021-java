@@ -6,13 +6,19 @@ import java.util.Properties;
 
 public class AocUtil {
 
+    private static Properties props;
+
     private AocUtil() {
     }
 
     public static Properties getProperties() {
+        if (props != null) {
+            return props;
+        }
+
         try {
             InputStream propsConfig = AocUtil.class.getClassLoader().getResourceAsStream("aoc.properties");
-            Properties props = new Properties();
+            props = new Properties();
             props.load(propsConfig);
             return props;
         } catch (IOException e) {

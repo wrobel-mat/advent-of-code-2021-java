@@ -2,7 +2,6 @@
   <configuration default="false" name="AdventOfCodeRunner" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="AdventOfCodeRunner" />
     <module name="advent-of-code-2021" />
-    <option name="PROGRAM_PARAMETERS" value="2021 1" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

@@ -23,37 +23,37 @@ public class Bingo {
     private List<Board> getBoards(List<String> boardsInput) {
         List<Board> result = new ArrayList<>();
         for (int i = 0; i < boardsInput.size(); i += Board.SIZE + 1) {
-            List<Row> rows = getRows(boardsInput.subList(i, i + Board.SIZE));
-            List<Column> columns = getColumns(rows);
+            List<Board.Row> rows = getRows(boardsInput.subList(i, i + Board.SIZE));
+            List<Board.Column> columns = getColumns(rows);
             result.add(new Board(rows, columns));
         }
         return result;
     }
 
-    private List<Row> getRows(List<String> rowsInput) {
+    private List<Board.Row> getRows(List<String> rowsInput) {
         return rowsInput.stream()
                 .map(row -> Arrays.stream(row.trim().split("\s+"))
                         .map(Integer::valueOf)
-                        .map(Number::new)
+                        .map(Board.Number::new)
                         .toList())
-                .map(Row::new)
+                .map(Board.Row::new)
                 .toList();
     }
 
-    private List<Column> getColumns(List<Row> rows) {
+    private List<Board.Column> getColumns(List<Board.Row> rows) {
         return IntStream.range(0, rows.size())
                 .mapToObj(i -> rows.stream()
                         .map(row -> row.numbers().get(i))
                         .toList())
-                .map(Column::new)
+                .map(Board.Column::new)
                 .toList();
     }
 
     public int playUntilFirstWin() {
         for (Integer number : numbers) {
             for (Board board : boards) {
-                for (Row row : board.rows()) {
-                    for (Number rowNumber : row.numbers()) {
+                for (Board.Row row : board.rows()) {
+                    for (Board.Number rowNumber : row.numbers()) {
                         if (number.compareTo(rowNumber.value()) == 0) {
                             rowNumber.mark();
                         }
@@ -77,8 +77,8 @@ public class Bingo {
                 if (winnerBoards.contains(board)) {
                     continue;
                 }
-                for (Row row : board.rows()) {
-                    for (Number rowNumber : row.numbers()) {
+                for (Board.Row row : board.rows()) {
+                    for (Board.Number rowNumber : row.numbers()) {
                         if (number.compareTo(rowNumber.value()) == 0) {
                             rowNumber.mark();
                         }
@@ -99,8 +99,8 @@ public class Bingo {
         return board.rows().stream()
                 .flatMap(row ->
                         row.numbers().stream()
-                                .filter(Predicate.not(Number::marked))
-                                .map(Number::value))
+                                .filter(Predicate.not(Board.Number::marked))
+                                .map(Board.Number::value))
                 .reduce(Integer::sum)
                 .orElse(0);
     }

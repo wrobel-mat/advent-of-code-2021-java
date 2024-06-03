@@ -2,9 +2,9 @@ package solution.day2;
 
 import java.util.Map;
 
-public class SimpleHandlerFactory implements IInstructionCommandHandlerFactory {
+public class SimpleHandlerFactory implements INavigationHandlerFactory {
 
-    private final Map<Command, IInstructionCommandHandler> handlers =
+    private final Map<Command, INavigationCommandHandler> handlers =
             Map.of(
                     Command.FORWARD, new ForwardHandler(),
                     Command.DOWN, new DownHandler(),
@@ -12,32 +12,32 @@ public class SimpleHandlerFactory implements IInstructionCommandHandlerFactory {
             );
 
     @Override
-    public IInstructionCommandHandler getInstructionCommandHandler(Instruction instruction) {
+    public INavigationCommandHandler getNavigationCommandHandler(Instruction instruction) {
         return handlers.getOrDefault(instruction.command(), new DoNothingHandler());
     }
 
-    private record DoNothingHandler() implements IInstructionCommandHandler {
+    private record DoNothingHandler() implements INavigationCommandHandler {
         @Override
         public void handle(Submarine submarine, Instruction instruction) {
             // do nothing
         }
     }
 
-    private record ForwardHandler() implements IInstructionCommandHandler {
+    private record ForwardHandler() implements INavigationCommandHandler {
         @Override
         public void handle(Submarine submarine, Instruction instruction) {
             submarine.horizontalPosition += instruction.units();
         }
     }
 
-    private record DownHandler() implements IInstructionCommandHandler {
+    private record DownHandler() implements INavigationCommandHandler {
         @Override
         public void handle(Submarine submarine, Instruction instruction) {
             submarine.depth += instruction.units();
         }
     }
 
-    private record UpHandler() implements IInstructionCommandHandler {
+    private record UpHandler() implements INavigationCommandHandler {
         @Override
         public void handle(Submarine submarine, Instruction instruction) {
             submarine.depth -= instruction.units();

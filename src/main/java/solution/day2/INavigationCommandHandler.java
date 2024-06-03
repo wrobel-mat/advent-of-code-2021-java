@@ -1,5 +1,5 @@
 package solution.day2;
 
-public interface IInstructionCommandHandler {
+public interface INavigationCommandHandler {
     void handle(Submarine submarine, Instruction instruction);
 }

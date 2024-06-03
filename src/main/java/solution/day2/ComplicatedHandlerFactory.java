@@ -2,9 +2,9 @@ package solution.day2;
 
 import java.util.Map;
 
-public class ComplicatedHandlerFactory implements IInstructionCommandHandlerFactory {
+public class ComplicatedHandlerFactory implements INavigationHandlerFactory {
 
-    private final Map<Command, IInstructionCommandHandler> handlers =
+    private final Map<Command, INavigationCommandHandler> handlers =
             Map.of(
                     Command.FORWARD, new ForwardHandler(),
                     Command.DOWN, new DownHandler(),
@@ -12,18 +12,18 @@ public class ComplicatedHandlerFactory implements IInstructionCommandHandlerFact
             );
 
     @Override
-    public IInstructionCommandHandler getInstructionCommandHandler(Instruction instruction) {
+    public INavigationCommandHandler getNavigationCommandHandler(Instruction instruction) {
         return handlers.getOrDefault(instruction.command(), new DoNothingHandler());
     }
 
-    private record DoNothingHandler() implements IInstructionCommandHandler {
+    private record DoNothingHandler() implements INavigationCommandHandler {
         @Override
         public void handle(Submarine submarine, Instruction instruction) {
             // do nothing
         }
     }
 
-    private record ForwardHandler() implements IInstructionCommandHandler {
+    private record ForwardHandler() implements INavigationCommandHandler {
         @Override
         public void handle(Submarine submarine, Instruction instruction) {
             submarine.horizontalPosition += instruction.units();
@@ -31,14 +31,14 @@ public class ComplicatedHandlerFactory implements IInstructionCommandHandlerFact
         }
     }
 
-    private record DownHandler() implements IInstructionCommandHandler {
+    private record DownHandler() implements INavigationCommandHandler {
         @Override
         public void handle(Submarine submarine, Instruction instruction) {
             submarine.aim += instruction.units();
         }
     }
 
-    private record UpHandler() implements IInstructionCommandHandler {
+    private record UpHandler() implements INavigationCommandHandler {
         @Override
         public void handle(Submarine submarine, Instruction instruction) {
             submarine.aim -= instruction.units();

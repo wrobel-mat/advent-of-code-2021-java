@@ -13,6 +13,7 @@ public class AdventOfCodeRunner {
         int day = Integer.parseInt(props.getProperty("day"));
         List<String> input = new AocClient().getInput(year, day);
         ISolution solution = AocUtil.getSolution(day);
+        System.out.println(STR."Year \{year}, Day \{day}");
         System.out.println(STR."Part 1: \{solution.solvePartOne(input)}");
         System.out.println(STR."Part 2: \{solution.solvePartTwo(input)}");
     }

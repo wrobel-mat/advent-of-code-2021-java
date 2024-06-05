@@ -10,8 +10,8 @@ public class Solution implements ISolution {
     @Override
     public String solvePartOne(List<String> input) {
         VentMap ventMap = new VentMap(input);
-        Predicate<VentLine> horizontalVents = ventLine -> ventLine.start().y() == ventLine.end().y();
-        Predicate<VentLine> verticalVents = ventLine -> ventLine.start().x() == ventLine.end().x();
+        Predicate<VentLine> horizontalVents = VentLine::isHorizontal;
+        Predicate<VentLine> verticalVents = VentLine::isVertical;
         long overlapCount = ventMap.countOverlappingVentPoints(horizontalVents.or(verticalVents));
         return String.valueOf(overlapCount);
     }

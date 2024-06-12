@@ -11,10 +11,22 @@ public class AdventOfCodeRunner {
         Properties props = AocUtil.getProperties();
         int year = Integer.parseInt(props.getProperty("year"));
         int day = Integer.parseInt(props.getProperty("day"));
-        List<String> input = new AocClient().getInput(year, day);
+        boolean submitAnswer = Boolean.parseBoolean(props.getProperty("submit.answer"));
+        AocClient aocClient = new AocClient();
+        List<String> input = aocClient.getInput(year, day);
         ISolution solution = AocUtil.getSolution(day);
+        String partOneAnswer = solution.solvePartOne(input);
+        String partTwoAnswer = solution.solvePartTwo(input);
         System.out.println(STR."Year \{year}, Day \{day}");
-        System.out.println(STR."Part 1: \{solution.solvePartOne(input)}");
-        System.out.println(STR."Part 2: \{solution.solvePartTwo(input)}");
+        System.out.println(STR."Part 1: \{partOneAnswer}");
+        if (submitAnswer) {
+            String partOneResponseMsg = aocClient.submitAnswer(year, day, 1, partOneAnswer);
+            System.out.println(partOneResponseMsg);
+        }
+        System.out.println(STR."Part 2: \{partTwoAnswer}");
+        if (submitAnswer) {
+            String partTwoResponseMsg = aocClient.submitAnswer(year, day, 2, partTwoAnswer);
+            System.out.println(partTwoResponseMsg);
+        }
     }
 }

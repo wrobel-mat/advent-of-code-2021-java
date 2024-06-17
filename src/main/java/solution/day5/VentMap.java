@@ -5,11 +5,11 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class VentMap {
+class VentMap {
 
     private final List<VentLine> ventLines;
 
-    public VentMap(List<String> input) {
+    VentMap(List<String> input) {
         this.ventLines = input.stream().map(lineSegment -> {
             String[] coordinates = lineSegment.split(" -> ");
             String[] startCoordinates = coordinates[0].split(",");
@@ -20,7 +20,7 @@ public class VentMap {
         }).toList();
     }
 
-    public long countOverlappingVentPoints(Predicate<VentLine> ventLineFilter) {
+    long countOverlappingVentPoints(Predicate<VentLine> ventLineFilter) {
         return ventLines.stream()
                 .filter(ventLineFilter)
                 .flatMap(ventLine -> ventLine.points().stream())

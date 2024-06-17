@@ -2,39 +2,39 @@ package solution.day4;
 
 import java.util.List;
 
-public record Board(List<Row> rows, List<Column> columns) {
+record Board(List<Row> rows, List<Column> columns) {
 
-    public static final int SIZE = 5;
+    static final int SIZE = 5;
 
-    public boolean wins() {
+    boolean wins() {
         return rows.stream().anyMatch(row -> row.numbers().stream().allMatch(Number::marked)) ||
                 columns.stream().anyMatch(column -> column.numbers().stream().allMatch(Number::marked));
     }
 
-    public record Row(List<Number> numbers) {
+    record Row(List<Number> numbers) {
     }
 
-    public record Column(List<Number> numbers) {
+    record Column(List<Number> numbers) {
     }
 
-    public static class Number {
+    static class Number {
 
         private final Integer value;
         private boolean marked;
 
-        public Number(Integer value) {
+        Number(Integer value) {
             this.value = value;
         }
 
-        public Integer value() {
+        Integer value() {
             return this.value;
         }
 
-        public void mark() {
+        void mark() {
             this.marked = true;
         }
 
-        public boolean marked() {
+        boolean marked() {
             return this.marked;
         }
 

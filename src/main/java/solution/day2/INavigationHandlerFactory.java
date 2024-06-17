@@ -1,5 +1,5 @@
 package solution.day2;
 
-public interface INavigationHandlerFactory {
+interface INavigationHandlerFactory {
     INavigationCommandHandler getNavigationCommandHandler(Instruction instruction);
 }

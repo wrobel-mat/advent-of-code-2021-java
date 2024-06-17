@@ -8,11 +8,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class LanternFishSpawnSimulation {
+class LanternFishSpawnSimulation {
 
     private final Map<LanternFishSpawnTimer, Long> timersCountMap;
 
-    public LanternFishSpawnSimulation(String input) {
+    LanternFishSpawnSimulation(String input) {
         this.timersCountMap = Arrays.stream(input.split(","))
                 .map(Integer::valueOf)
                 .map(LanternFishSpawnTimer::new)
@@ -23,7 +23,7 @@ public class LanternFishSpawnSimulation {
         this.timersCountMap = timersCountMap;
     }
 
-    public LanternFishSpawnSimulation simulateSpawn(int days) {
+    LanternFishSpawnSimulation simulateSpawn(int days) {
         Map<LanternFishSpawnTimer, Long> simulation = new HashMap<>(this.timersCountMap);
         Map<LanternFishSpawnTimer, Long> cache = new HashMap<>();
         IntStream.range(0, days).forEach(day -> {
@@ -40,7 +40,7 @@ public class LanternFishSpawnSimulation {
         return new LanternFishSpawnSimulation(simulation);
     }
 
-    public long countPopulation() {
+    long countPopulation() {
         return timersCountMap.values().stream().reduce(Long::sum).orElse(0L);
     }
 }

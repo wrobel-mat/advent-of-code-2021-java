@@ -5,9 +5,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public record VentLine(Set<Point> points) {
+record VentLine(Set<Point> points) {
 
-    public static VentLine draw(Point start, Point end) {
+    static VentLine draw(Point start, Point end) {
         if (start.equals(end)) {
             return new VentLine(Set.of(start));
         }
@@ -35,12 +35,12 @@ public record VentLine(Set<Point> points) {
         return new VentLine(points);
     }
 
-    public boolean isHorizontal() {
+    boolean isHorizontal() {
         int y = points.stream().findFirst().get().y();
         return points.stream().allMatch(p -> p.y() == y);
     }
 
-    public boolean isVertical() {
+    boolean isVertical() {
         int x = points.stream().findFirst().get().x();
         return points.stream().allMatch(p -> p.x() == x);
     }

@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DiagnosticReport {
+class DiagnosticReport {
 
     private static final String ZERO = "0";
     private static final String ONE = "1";
     private final List<String[]> binaries;
 
-    public DiagnosticReport(List<String> input) {
+    DiagnosticReport(List<String> input) {
         this.binaries = input.stream()
                 .map(binary -> binary.split(""))
                 .collect(Collectors.toList());
     }
 
-    public int calculatePowerConsumption() {
+    int calculatePowerConsumption() {
         int[] bitCounters = new int[binaries.getFirst().length];
         for (String[] bits : binaries) {
             for (int i = 0; i < bits.length; i++) {
@@ -40,7 +40,7 @@ public class DiagnosticReport {
         return gammaRate * epsilonRate;
     }
 
-    public int calculateLifeSupportRating() {
+    int calculateLifeSupportRating() {
         List<String[]> oxyRemainingCandidates = new ArrayList<>(binaries);
         List<String[]> co2RemainingCandidates = new ArrayList<>(binaries);
         int oxygenGeneratorRating = 0;

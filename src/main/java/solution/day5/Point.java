@@ -2,7 +2,7 @@ package solution.day5;
 
 import java.util.Objects;
 
-public record Point(int x, int y) {
+record Point(int x, int y) {
 
     @Override
     public boolean equals(Object o) {

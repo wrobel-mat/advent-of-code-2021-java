@@ -1,6 +1,6 @@
 package solution.day2;
 
-public enum Command {
+enum Command {
     FORWARD,
     DOWN,
     UP

@@ -2,7 +2,7 @@ package solution.day2;
 
 import java.util.Map;
 
-public class ComplicatedHandlerFactory implements INavigationHandlerFactory {
+class ComplicatedHandlerFactory implements INavigationHandlerFactory {
 
     private final Map<Command, INavigationCommandHandler> handlers =
             Map.of(

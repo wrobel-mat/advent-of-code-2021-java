@@ -3,17 +3,17 @@ package solution.day1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SonarSweepMeasurements {
+class SonarSweepMeasurements {
 
     private final List<SeaFloorDepth> floorDepths = new ArrayList<>();
 
-    public SonarSweepMeasurements(List<String> sonarSweepReport) {
+    SonarSweepMeasurements(List<String> sonarSweepReport) {
         for (String measurement : sonarSweepReport) {
             floorDepths.add(new SeaFloorDepth(Integer.parseInt(measurement)));
         }
     }
 
-    public String countDepthIncreases(int measurementWindowSize) {
+    String countDepthIncreases(int measurementWindowSize) {
         int counter = 0;
         int currentMeasurement;
         int previousMeasurement = getMeasurementWindowSum(0, measurementWindowSize);

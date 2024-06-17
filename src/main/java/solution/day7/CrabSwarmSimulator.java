@@ -1,8 +1,8 @@
 package solution.day7;
 
-public record CrabSwarmSimulator(CrabSubmarineFuelUsageCalculator fuelUsageCalculator) {
+record CrabSwarmSimulator(CrabSubmarineFuelUsageCalculator fuelUsageCalculator) {
 
-    public long simulateSwarmAlignmentWithLowestFuelUsage(CrabSwarm crabSwarm) {
+    long simulateSwarmAlignmentWithLowestFuelUsage(CrabSwarm crabSwarm) {
         long lowestFuelUsage = Long.MAX_VALUE;
         for (CrabSubmarinePosition submarine1 : crabSwarm.submarines()) {
             long currentFuelUsage = 0;

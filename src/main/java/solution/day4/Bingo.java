@@ -4,12 +4,12 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-public class Bingo {
+class Bingo {
 
     private final Integer[] numbers;
     private final List<Board> boards;
 
-    public Bingo(List<String> input) {
+    Bingo(List<String> input) {
         this.numbers = getNumbers(input.getFirst());
         this.boards = getBoards(input.subList(2, input.size()));
     }
@@ -49,7 +49,7 @@ public class Bingo {
                 .toList();
     }
 
-    public int playUntilFirstWin() {
+    int playUntilFirstWin() {
         for (Integer number : numbers) {
             for (Board board : boards) {
                 for (Board.Row row : board.rows()) {
@@ -68,7 +68,7 @@ public class Bingo {
         return 0;
     }
 
-    public int playAllBoards() {
+    int playAllBoards() {
         Board lastWinnerBoard = new Board(Collections.emptyList(), Collections.emptyList());
         Integer lastWinnerNumber = 0;
         Set<Board> winnerBoards = new HashSet<>();

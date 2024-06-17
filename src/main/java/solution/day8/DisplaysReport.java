@@ -13,7 +13,7 @@ class DisplaysReport {
 
     private final List<DisplayEntry> displayEntries;
 
-    public DisplaysReport(List<String> input) {
+    DisplaysReport(List<String> input) {
         displayEntries = input.stream().map(entry -> {
             String[] entryInput = entry.split(" \\| ");
             String[] patternsInput = entryInput[0].split(" ");
@@ -24,7 +24,7 @@ class DisplaysReport {
         }).toList();
     }
 
-    public long countEasyDigits() {
+    long countEasyDigits() {
         Set<Integer> easyDigitSizes = Set.of(NUM_1_ACTIVE_SEGMENTS_COUNT, NUM_4_ACTIVE_SEGMENTS_COUNT, NUM_7_ACTIVE_SEGMENTS_COUNT, NUM_8_ACTIVE_SEGMENTS_COUNT);
         return displayEntries.stream()
                 .map(DisplayEntry::output)
@@ -35,7 +35,7 @@ class DisplaysReport {
                 .count();
     }
 
-    public long decodeAndSumOutputValues() {
+    long decodeAndSumOutputValues() {
         List<Integer> decodedNumbers = new ArrayList<>();
         for (DisplayEntry entry : displayEntries) {
             List<Number> patterns = entry.patterns();

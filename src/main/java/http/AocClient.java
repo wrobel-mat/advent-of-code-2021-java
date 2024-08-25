@@ -19,7 +19,7 @@ public class AocClient {
 
     public List<String> getInput(int year, int day) {
         try {
-            Path inputPath = Path.of(STR."./src/main/resources/day\{day}.input");
+            Path inputPath = Path.of(STR."./src/main/resources/inputs/day\{day}.input");
             if (Files.exists(inputPath)) {
                 return Files.readAllLines(inputPath);
             }

@@ -90,7 +90,7 @@ public class AocClient {
     }
 
     private Result getResult(int year, int day) throws IOException {
-        Path resultPath = Path.of(STR."./src/main/resources/results/day\{day}.result");
+        Path resultPath = Path.of(STR."./src/main/resources/results/day\{day}.json");
         Result result;
         if (Files.exists(resultPath)) {
             ObjectMapper mapper = new ObjectMapper();
@@ -103,7 +103,7 @@ public class AocClient {
     }
 
     private void persistResult(Result result) throws IOException {
-        Path resultPath = Path.of(STR."./src/main/resources/results/day\{result.day()}.result");
+        Path resultPath = Path.of(STR."./src/main/resources/results/day\{result.day()}.json");
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         String resultString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);

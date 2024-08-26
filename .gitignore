@@ -3,7 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 src/main/resources/inputs/*.input
-src/main/resources/results/*.result
+src/main/resources/results/*.json
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

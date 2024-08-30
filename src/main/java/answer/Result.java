@@ -17,17 +17,26 @@ public class Result {
         return result;
     }
 
-    public void complete(int partNum, String answer) {
+    public void completePart(int partNum, String answer) {
         Answer currentAnswer = answers.get(partNum);
         currentAnswer.setCompleted();
         currentAnswer.setAnswer(answer);
     }
 
-    public boolean isCompleted(int partNum) {
-        return answers.get(partNum).isCompleted();
+    public boolean partNotCompleted(int partNum) {
+        return !answers.get(partNum).isCompleted();
     }
 
     public int day() {
         return day;
+    }
+
+    public boolean bothPartsCompleted() {
+        return answers.values().stream().allMatch(Answer::isCompleted);
+    }
+
+    @Override
+    public String toString() {
+        return STR."year: \{year}, day: \{day}\nanswers: \{answers.values()}";
     }
 }

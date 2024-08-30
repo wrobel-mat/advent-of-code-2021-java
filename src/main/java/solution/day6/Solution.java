@@ -3,20 +3,21 @@ package solution.day6;
 import solution.ISolution;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Solution implements ISolution {
 
     @Override
-    public String solvePartOne(List<String> input) {
+    public Optional<String> solvePartOne(List<String> input) {
         LanternFishSpawnSimulation simulation = new LanternFishSpawnSimulation(input.getFirst());
         long populationCount = simulation.simulateSpawn(80).countPopulation();
-        return String.valueOf(populationCount);
+        return Optional.of(String.valueOf(populationCount));
     }
 
     @Override
-    public String solvePartTwo(List<String> input) {
+    public Optional<String> solvePartTwo(List<String> input) {
         LanternFishSpawnSimulation simulation = new LanternFishSpawnSimulation(input.getFirst());
         long populationCount = simulation.simulateSpawn(256).countPopulation();
-        return String.valueOf(populationCount);
+        return Optional.of(String.valueOf(populationCount));
     }
 }

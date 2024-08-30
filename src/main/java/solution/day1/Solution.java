@@ -3,18 +3,21 @@ package solution.day1;
 import solution.ISolution;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Solution implements ISolution {
 
     @Override
-    public String solvePartOne(List<String> input) {
+    public Optional<String> solvePartOne(List<String> input) {
         SonarSweepMeasurements measurements = new SonarSweepMeasurements(input);
-        return measurements.countDepthIncreases(1);
+        int answer = measurements.countDepthIncreases(1);
+        return Optional.of(String.valueOf(answer));
     }
 
     @Override
-    public String solvePartTwo(List<String> input) {
+    public Optional<String> solvePartTwo(List<String> input) {
         SonarSweepMeasurements measurements = new SonarSweepMeasurements(input);
-        return measurements.countDepthIncreases(3);
+        int answer = measurements.countDepthIncreases(3);
+        return Optional.of(String.valueOf(answer));
     }
 }

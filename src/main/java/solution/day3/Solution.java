@@ -3,20 +3,21 @@ package solution.day3;
 import solution.ISolution;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Solution implements ISolution {
 
     @Override
-    public String solvePartOne(List<String> input) {
+    public Optional<String> solvePartOne(List<String> input) {
         DiagnosticReport diagnosticReport = new DiagnosticReport(input);
         int powerConsumption = diagnosticReport.calculatePowerConsumption();
-        return String.valueOf(powerConsumption);
+        return Optional.of(String.valueOf(powerConsumption));
     }
 
     @Override
-    public String solvePartTwo(List<String> input) {
+    public Optional<String> solvePartTwo(List<String> input) {
         DiagnosticReport diagnosticReport = new DiagnosticReport(input);
         int lifeSupportRating = diagnosticReport.calculateLifeSupportRating();
-        return String.valueOf(lifeSupportRating);
+        return Optional.of(String.valueOf(lifeSupportRating));
     }
 }

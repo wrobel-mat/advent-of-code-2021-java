@@ -28,4 +28,9 @@ class Answer {
         COMPLETE,
         INCOMPLETE
     }
+
+    @Override
+    public String toString() {
+        return STR."{part: \{part}, answer: '\{answer}', status: \{status}}";
+    }
 }

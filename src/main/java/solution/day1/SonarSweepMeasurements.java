@@ -13,7 +13,7 @@ class SonarSweepMeasurements {
         }
     }
 
-    String countDepthIncreases(int measurementWindowSize) {
+    int countDepthIncreases(int measurementWindowSize) {
         int counter = 0;
         int currentMeasurement;
         int previousMeasurement = getMeasurementWindowSum(0, measurementWindowSize);
@@ -24,7 +24,7 @@ class SonarSweepMeasurements {
             }
             previousMeasurement = currentMeasurement;
         }
-        return String.valueOf(counter);
+        return counter;
     }
 
     private int getMeasurementWindowSum(int from, int to) {

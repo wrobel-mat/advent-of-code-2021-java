@@ -28,6 +28,9 @@ public class Cache {
     public static void persistInput(int day, List<String> input) {
         Path inputPath = Path.of(STR."./src/main/resources/inputs/day\{day}.txt");
         try {
+            if (Files.notExists(inputPath.getParent())) {
+                Files.createDirectory(inputPath.getParent());
+            }
             Files.write(inputPath, input);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -56,6 +59,9 @@ public class Cache {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         try {
+            if (Files.notExists(resultPath.getParent())) {
+                Files.createDirectory(resultPath.getParent());
+            }
             Files.write(resultPath, mapper.writerWithDefaultPrettyPrinter().writeValueAsBytes(result));
         } catch (IOException e) {
             throw new RuntimeException(e);

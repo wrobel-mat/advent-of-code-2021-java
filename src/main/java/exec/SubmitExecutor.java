@@ -1,5 +1,8 @@
+package exec;
+
 import answer.Result;
 import cache.Cache;
+import exec.mode.ApplicationMode;
 import http.AocClient;
 import http.AocSubmitResult;
 import solution.ISolution;
@@ -8,10 +11,15 @@ import util.AocUtil;
 import java.util.List;
 import java.util.Properties;
 
+public class SubmitExecutor implements IModeExecutor {
 
-public class AdventOfCodeRunner {
+    @Override
+    public ApplicationMode mode() {
+        return ApplicationMode.SUBMIT;
+    }
 
-    public static void main(String[] args) {
+    @Override
+    public void run() {
         final Properties props = AocUtil.getProperties();
         final int year = Integer.parseInt(props.getProperty("year"));
         final int day = Integer.parseInt(props.getProperty("day"));

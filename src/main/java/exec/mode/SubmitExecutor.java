@@ -5,6 +5,7 @@ import cache.Cache;
 import http.AocClient;
 import http.AocSubmitResult;
 import solution.ISolution;
+import solution.SolutionProvider;
 import util.AocUtil;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class SubmitExecutor implements IModeExecutor {
                     return fetchedInput;
                 });
 
-        final ISolution solution = AocUtil.getSolution(day);
+        final ISolution solution = SolutionProvider.getSolution(day);
         if (result.partNotCompleted(1)) {
             solution.solvePartOne(input)
                     .map(answer -> aocClient.submitAnswer(year, day, 1, answer))

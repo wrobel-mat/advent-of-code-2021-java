@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class AocClient {
 
+    private static final Logger LOG = Logger.getLogger(AocClient.class.getName());
     
     public List<String> getInput(int year, int day) {
         try {
@@ -59,6 +61,7 @@ public class AocClient {
             }
             Document document = Jsoup.parse(response.toString());
             String responseMsg = document.getElementsByTag("article").text();
+            LOG.info(STR."Part \{part}\nAnswer: \{answer}\nResponse: \{responseMsg}");
             return new AocSubmitResult(answer, responseMsg);
         } catch (IOException e) {
             throw new RuntimeException(e);

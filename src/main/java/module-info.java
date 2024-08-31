@@ -6,6 +6,7 @@ module advent.of.code {
     uses IModeExecutor;
     requires com.fasterxml.jackson.databind;
     requires org.jsoup;
+    requires java.logging;
     provides IModeExecutor with InitExecutor,
             SubmitExecutor;
     opens answer to com.fasterxml.jackson.databind;

@@ -1,6 +1,4 @@
-package exec;
-
-import exec.mode.ApplicationMode;
+package exec.mode;
 
 
 public interface IModeExecutor {

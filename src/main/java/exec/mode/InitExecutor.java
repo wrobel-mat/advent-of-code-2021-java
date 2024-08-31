@@ -1,6 +1,5 @@
-package exec;
+package exec.mode;
 
-import exec.mode.ApplicationMode;
 import util.AocUtil;
 
 import java.io.IOException;

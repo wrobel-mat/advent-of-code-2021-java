@@ -1,8 +1,7 @@
-package exec;
+package exec.mode;
 
 import answer.Result;
 import cache.Cache;
-import exec.mode.ApplicationMode;
 import http.AocClient;
 import http.AocSubmitResult;
 import solution.ISolution;

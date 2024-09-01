@@ -38,12 +38,12 @@ class CaveTraversalRules {
     static class CaveTypeTraversalRule {
         private final CaveType caveType;
         private final CaveVisitLimit visitLimit;
-        private final CavePathApplicability cavePathApplicability;
+        private final CavesPerPathLimit cavesPerPathLimit;
 
-        private CaveTypeTraversalRule(CaveType caveType, CaveVisitLimit visitLimit, CavePathApplicability cavePathApplicability) {
+        private CaveTypeTraversalRule(CaveType caveType, CaveVisitLimit visitLimit, CavesPerPathLimit cavesPerPathLimit) {
             this.caveType = caveType;
             this.visitLimit = visitLimit;
-            this.cavePathApplicability = cavePathApplicability;
+            this.cavesPerPathLimit = cavesPerPathLimit;
         }
 
         boolean canTraverseToNextCave(CavePath path, Cave potentialNextCave) {
@@ -54,37 +54,25 @@ class CaveTraversalRules {
             List<Cave> visitedCavesWithoutTheFirstOne = path.steps().subList(1, path.steps().size());
             List<Cave> visitedCavesByType = visitedCavesWithoutTheFirstOne.stream().filter(caveType::matches).toList();
             List<Cave> visitedCavesByTypeIncludingNextCave = Stream.concat(visitedCavesByType.stream(), Stream.of(potentialNextCave)).toList();
-            return validateCavePathConsideringVisitLimit(visitedCavesByTypeIncludingNextCave, visitLimit);
-        }
-
-        boolean validateCavePathConsideringVisitLimit(List<Cave> validatedCavePath, CaveVisitLimit visitLimit) {
-            return switch (cavePathApplicability) {
-                case ALL_CAVES_PER_PATH -> validatedCavePath.stream()
-                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                        .values().stream()
-                        .allMatch(visitLimit::notExceeded);
-                case ONE_CAVE_PER_PATH -> {
-                    Collection<Long> visitCounters = validatedCavePath.stream()
-                            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                            .values();
-                    yield visitCounters.stream().allMatch(visitLimit::notExceeded)
-                            && visitCounters.stream().filter(visitLimit::matchesLimit).count() <= cavePathApplicability.caveCountLimit;
-                }
-            };
+            Collection<Long> visitCounters = visitedCavesByTypeIncludingNextCave.stream()
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                    .values();
+            return visitCounters.stream().allMatch(visitLimit::notExceeded)
+                    && cavesPerPathLimit.notExceeded(visitCounters.stream().filter(visitLimit::isEqualOrWithinLimit).count());
         }
 
         static class Builder {
-            private CaveTraversalRules.Builder parentBuilder;
+            private final CaveTraversalRules.Builder parentBuilder;
             private CaveType caveType;
             private CaveVisitLimit visitLimit;
-            private CavePathApplicability cavePathApplicability;
+            private CavesPerPathLimit cavesPerPathLimit;
 
             private Builder(CaveTraversalRules.Builder parentBuilder) {
                 this.parentBuilder = parentBuilder;
             }
 
-            Builder applicableTo(CavePathApplicability cavePathApplicability) {
-                this.cavePathApplicability = cavePathApplicability;
+            Builder withCavesPerPathLimit(CavesPerPathLimit cavesPerPathLimit) {
+                this.cavesPerPathLimit = cavesPerPathLimit;
                 return this;
             }
 
@@ -94,26 +82,29 @@ class CaveTraversalRules {
             }
 
             CaveTraversalRules.Builder and() {
-                parentBuilder.rules.add(new CaveTypeTraversalRule(caveType, visitLimit, cavePathApplicability));
+                parentBuilder.rules.add(new CaveTypeTraversalRule(caveType, visitLimit, cavesPerPathLimit));
                 return parentBuilder;
             }
 
             CaveTraversalRules build() {
-                parentBuilder.rules.add(new CaveTypeTraversalRule(caveType, visitLimit, cavePathApplicability));
+                parentBuilder.rules.add(new CaveTypeTraversalRule(caveType, visitLimit, cavesPerPathLimit));
                 return parentBuilder.build();
             }
         }
     }
 
     enum CaveType {
-        BIG_CAVE,
-        SMALL_CAVE;
+        BIG_CAVE(cave -> cave.name().equals(cave.name().toUpperCase())),
+        SMALL_CAVE(cave -> cave.name().equals(cave.name().toLowerCase()));
+
+        private final Function<Cave, Boolean> caveVerifier;
+
+        CaveType(Function<Cave, Boolean> caveVerifier) {
+            this.caveVerifier = caveVerifier;
+        }
 
         boolean matches(Cave cave) {
-            return switch (this) {
-                case BIG_CAVE -> cave.name().equals(cave.name().toUpperCase());
-                case SMALL_CAVE -> cave.name().equals(cave.name().toLowerCase());
-            };
+            return caveVerifier.apply(cave);
         }
     }
 
@@ -132,22 +123,26 @@ class CaveTraversalRules {
             return visitCount <= limit;
         }
 
-        boolean matchesLimit(long visitCount) {
+        boolean isEqualOrWithinLimit(long visitCount) {
             if (this.equals(UNLIMITED)) {
-                return false;
+                return visitCount > 1;
             }
-            return visitCount == limit;
+            return visitCount == limit || (limit > 1 && visitCount > 1);
         }
     }
 
-    enum CavePathApplicability {
-        ALL_CAVES_PER_PATH(-1),
-        ONE_CAVE_PER_PATH(1);
+    enum CavesPerPathLimit {
+        ALL_CAVES_PER_PATH(_ -> true),
+        ONE_CAVE_PER_PATH(caveCount -> caveCount <= 1);
 
-        private final int caveCountLimit;
+        private final Function<Long, Boolean> countVerifier;
 
-        CavePathApplicability(int caveCountLimit) {
-            this.caveCountLimit = caveCountLimit;
+        CavesPerPathLimit(Function<Long, Boolean> countVerifier) {
+            this.countVerifier = countVerifier;
+        }
+
+        boolean notExceeded(long caveCount) {
+            return countVerifier.apply(caveCount);
         }
     }
 }

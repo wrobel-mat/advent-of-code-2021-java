@@ -5,11 +5,11 @@ import solution.ISolution;
 import java.util.List;
 import java.util.Optional;
 
-import static solution.day12.CaveTraversalRules.CavePathApplicability.ALL_CAVES_PER_PATH;
-import static solution.day12.CaveTraversalRules.CavePathApplicability.ONE_CAVE_PER_PATH;
 import static solution.day12.CaveTraversalRules.CaveType.BIG_CAVE;
 import static solution.day12.CaveTraversalRules.CaveType.SMALL_CAVE;
 import static solution.day12.CaveTraversalRules.CaveVisitLimit.*;
+import static solution.day12.CaveTraversalRules.CavesPerPathLimit.ALL_CAVES_PER_PATH;
+import static solution.day12.CaveTraversalRules.CavesPerPathLimit.ONE_CAVE_PER_PATH;
 
 public class Solution implements ISolution {
 
@@ -19,11 +19,11 @@ public class Solution implements ISolution {
         CaveTraversalRules traversalRules =
                 new CaveTraversalRules.Builder()
                         .addRuleForCaveType(BIG_CAVE)
-                        .applicableTo(ALL_CAVES_PER_PATH)
+                        .withCavesPerPathLimit(ALL_CAVES_PER_PATH)
                         .withVisitLimit(UNLIMITED)
                         .and()
                         .addRuleForCaveType(SMALL_CAVE)
-                        .applicableTo(ALL_CAVES_PER_PATH)
+                        .withCavesPerPathLimit(ALL_CAVES_PER_PATH)
                         .withVisitLimit(AT_MOST_ONCE)
                         .build();
         long answer = caveMap.countAllPaths(traversalRules);
@@ -36,11 +36,11 @@ public class Solution implements ISolution {
         CaveTraversalRules traversalRules =
                 new CaveTraversalRules.Builder()
                         .addRuleForCaveType(BIG_CAVE)
-                        .applicableTo(ALL_CAVES_PER_PATH)
+                        .withCavesPerPathLimit(ALL_CAVES_PER_PATH)
                         .withVisitLimit(UNLIMITED)
                         .and()
                         .addRuleForCaveType(SMALL_CAVE)
-                        .applicableTo(ONE_CAVE_PER_PATH)
+                        .withCavesPerPathLimit(ONE_CAVE_PER_PATH)
                         .withVisitLimit(AT_MOST_TWICE)
                         .build();
         long answer = caveMap.countAllPaths(traversalRules);

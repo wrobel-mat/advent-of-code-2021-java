@@ -1,6 +1,7 @@
 import exec.mode.IModeExecutor;
 import exec.mode.InitExecutor;
 import exec.mode.SubmitExecutor;
+import exec.mode.TestSolutionExecutor;
 
 module advent.of.code {
     uses IModeExecutor;
@@ -8,6 +9,7 @@ module advent.of.code {
     requires org.jsoup;
     requires java.logging;
     provides IModeExecutor with InitExecutor,
-            SubmitExecutor;
+            SubmitExecutor,
+            TestSolutionExecutor;
     opens answer to com.fasterxml.jackson.databind;
 }

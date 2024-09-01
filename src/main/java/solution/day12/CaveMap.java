@@ -27,7 +27,7 @@ class CaveMap {
     }
 
     private void findAllPathsBetween(Cave start, Cave end, CaveTraversalRules traversalRules) {
-        CavePath initialPath = new CavePath(List.of(start), traversalRules);
+        CavePath initialPath = CavePath.of(List.of(start), traversalRules);
         for (Cave adjacent : start.connectedCaves()) {
             walkCavePathRecursively(adjacent, end, initialPath);
         }

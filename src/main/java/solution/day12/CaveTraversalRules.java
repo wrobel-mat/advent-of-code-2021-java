@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 class CaveTraversalRules {
 
@@ -15,9 +14,11 @@ class CaveTraversalRules {
         this.rules = rules;
     }
 
-    boolean validate(CavePath path, Cave potentialNextCave) {
-        return rules.stream()
-                .allMatch(traversalRule -> traversalRule.canTraverseToNextCave(path, potentialNextCave));
+    boolean validate(List<Cave> cavePathSteps) {
+        if (cavePathSteps.size() <= 1) {
+            return true;
+        }
+        return rules.stream().allMatch(traversalRule -> traversalRule.isValidCavePath(cavePathSteps));
     }
 
     static class Builder {
@@ -46,15 +47,16 @@ class CaveTraversalRules {
             this.cavesPerPathLimit = cavesPerPathLimit;
         }
 
-        boolean canTraverseToNextCave(CavePath path, Cave potentialNextCave) {
-            if (potentialNextCave.equals(path.steps().getFirst())) {
+        boolean isValidCavePath(List<Cave> cavePathSteps) {
+            Cave lastStep = cavePathSteps.getLast();
+            if (lastStep.equals(cavePathSteps.getFirst())) {
                 return false;
             }
-
-            List<Cave> visitedCavesWithoutTheFirstOne = path.steps().subList(1, path.steps().size());
-            List<Cave> visitedCavesByType = visitedCavesWithoutTheFirstOne.stream().filter(caveType::matches).toList();
-            List<Cave> visitedCavesByTypeIncludingNextCave = Stream.concat(visitedCavesByType.stream(), Stream.of(potentialNextCave)).toList();
-            Collection<Long> visitCounters = visitedCavesByTypeIncludingNextCave.stream()
+            if (!caveType.matches(lastStep)) {
+                return true;
+            }
+            Collection<Long> visitCounters = cavePathSteps.subList(1, cavePathSteps.size()).stream()
+                    .filter(caveType::matches).toList().stream()
                     .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                     .values();
             return visitCounters.stream().allMatch(visitLimit::notExceeded)

@@ -6,7 +6,7 @@ import http.AocClient;
 import http.AocSubmitResult;
 import solution.ISolution;
 import solution.SolutionProvider;
-import util.AocUtil;
+import config.Configuration;
 
 import java.util.List;
 import java.util.Properties;
@@ -20,7 +20,7 @@ public class SubmitExecutor implements IModeExecutor {
 
     @Override
     public void run() {
-        final Properties props = AocUtil.getProperties();
+        final Properties props = Configuration.getProperties();
         final int year = Integer.parseInt(props.getProperty("year"));
         final int day = Integer.parseInt(props.getProperty("day"));
         final Result result = Cache.getResult(year, day);

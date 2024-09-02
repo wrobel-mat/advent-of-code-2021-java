@@ -2,7 +2,7 @@ package http;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import util.AocUtil;
+import config.Configuration;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.ByteArrayOutputStream;
@@ -22,7 +22,7 @@ public class AocClient {
     
     public List<String> getInput(int year, int day) {
         try {
-            Properties props = AocUtil.getProperties();
+            Properties props = Configuration.getProperties();
             String sessionKey = props.getProperty("session.key");
             String userAgent = props.getProperty("user.agent");
             URL url = URI.create(STR."https://adventofcode.com/\{year}/day/\{day}/input").toURL();
@@ -43,7 +43,7 @@ public class AocClient {
 
     public AocSubmitResult submitAnswer(int year, int day, int part, String answer) {
         try {
-            Properties props = AocUtil.getProperties();
+            Properties props = Configuration.getProperties();
             String sessionKey = props.getProperty("session.key");
             String userAgent = props.getProperty("user.agent");
             URL url = URI.create(STR."https://adventofcode.com/\{year}/day/\{day}/answer").toURL();

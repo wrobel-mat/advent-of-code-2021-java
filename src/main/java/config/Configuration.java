@@ -1,14 +1,14 @@
-package util;
+package config;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class AocUtil {
+public class Configuration {
 
     private static Properties props;
 
-    private AocUtil() {
+    private Configuration() {
     }
 
     public static Properties getProperties() {
@@ -17,7 +17,7 @@ public class AocUtil {
         }
 
         try {
-            InputStream propsConfig = AocUtil.class.getClassLoader().getResourceAsStream("aoc.properties");
+            InputStream propsConfig = Configuration.class.getClassLoader().getResourceAsStream("aoc.properties");
             props = new Properties();
             props.load(propsConfig);
             return props;

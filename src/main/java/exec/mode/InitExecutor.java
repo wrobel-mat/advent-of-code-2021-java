@@ -1,6 +1,6 @@
 package exec.mode;
 
-import util.AocUtil;
+import config.Configuration;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +18,7 @@ public class InitExecutor implements IModeExecutor {
 
     @Override
     public void run() {
-        final Properties props = AocUtil.getProperties();
+        final Properties props = Configuration.getProperties();
         final int day = Integer.parseInt(props.getProperty("day"));
         final Path templatePath = Path.of(STR."./src/main/resources/templates/Solution.java");
         final Path initPath = Path.of(STR."./src/main/java/solution/day\{day}/Solution.java");
